@@ -146,11 +146,9 @@ export default class CognitoAuthSession {
   isValid() {
     const now = Math.floor(new Date() / 1000);
     try {
-      if (this.accessToken != null) {
-        return now < this.accessToken.getExpiration();
-      }
-      if (this.idToken != null) {
-        return now < this.idToken.getExpiration();
+      if (this.accessToken != null && this.idToken != null) {
+        return (now < this.accessToken.getExpiration() &&
+          now < this.idToken.getExpiration());
       }
       return false;
     } catch (e) {
